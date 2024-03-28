@@ -4,11 +4,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class GrassTile extends Tiles {
+public class SandTile extends Tiles {
     private Tiles[] tiles;
     private int numberOfTiles;
 
-    public GrassTile(int numberOfTiles) {
+    public SandTile(int numberOfTiles) {
         this.numberOfTiles = numberOfTiles;
         loadImages();
     }
@@ -22,12 +22,12 @@ public class GrassTile extends Tiles {
         this.tiles = new Tiles[numberOfTiles];
         for (int i = 0; i < numberOfTiles; i++) {
             this.tiles[i] = new Tiles();
-            imagePath = "images/grass/" + i + ".png";
+            imagePath = "images/sand/" + i + ".png";
             try {
                 BufferedImage image = ImageIO.read(getClass().getResourceAsStream(imagePath));
                 this.tiles[i].image = image;
             } catch (IOException e) {
-                System.out.println("Error in Loading Grass Tiles: " + imagePath);
+                System.out.println("Error in Loading Sand Tiles: " + imagePath);
             }
         }
     }
