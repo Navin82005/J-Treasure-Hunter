@@ -1,15 +1,13 @@
-package main.tiles;
+package tiles;
 
 import java.util.HashMap;
 
-import main.services.ReadINIFile;
+import services.ReadINIFile;
+import services.TileMap;
+import services.WorldData;
 import treasurehunter.GamePanel;
 
 import java.awt.Graphics2D;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 
 public class TileManager {
     HashMap<String, Tiles[]> tiles = new HashMap<>();
@@ -19,6 +17,9 @@ public class TileManager {
     int tileSize;
     ReadINIFile iniReader;
     int worldLevel = 0;
+    TileMap[][] worldData;
+    int worldRow;
+    int worldCol;
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
@@ -26,7 +27,7 @@ public class TileManager {
     }
 
     public void loadImages() {
-        tiles.put("grass", new GrassTile(8).getTiles());
+        tiles.put("grass", new GrassTile(9).getTiles());
         System.out.println(tiles);
         iniReader = new ReadINIFile();
         if (iniReader != null) {
@@ -36,23 +37,21 @@ public class TileManager {
             System.out.println(
                     "scaleFactor : " + scaleFactor + " tileSize : " + tileSize + " " + "worldLevel : " + worldLevel);
         }
-
-        try (InputStream inputStream = getClass().getResourceAsStream("/resources/worldData/L1.json");
-                Reader reader = new InputStreamReader(inputStream)) {
-            // Gson gson = new Gson();
-            // JsonObject json = gson.fromJson(reader, JsonObject.class);
-            // Process the JSON object as needed
-        } catch (Exception e) {
-            System.out.println("Error Loading World Data: " + e.getMessage());
-        }
-
+        WorldData worldLoader = new WorldData(getClass().getResourceAsStream("resources/worldData/L1.json"));
+        worldCol = worldLoader.getWorldCol();
+        worldRow = worldLoader.getWorldRow();
+        worldData = worldLoader.getWorldData();
+        worldLevel = worldLoader.getWorldLevel();
     }
 
     public void draw(Graphics2D g2) {
+
         int col = 0, row = 0;
-        for (int i = 0; i < gp.maxScreenRow; i++) {
-            for (int j = 0; j < gp.maxScreenCol; j++) {
-                g2.drawImage(tiles.get("grass")[4].image, col, row, tileSize * scaleFactor, tileSize * scaleFactor,
+        for (int i = 0; i < worldRow; i++) {
+            for (int j = 0; j < worldCol; j++) {
+                g2.drawImage(tiles.get(worldData[i][j].getTileName())[worldData[i][j].getTileNumber()].image,
+                        col, row, tileSize * scaleFactor,
+                        tileSize * scaleFactor,
                         null);
                 col += gp.tileSize;
             }

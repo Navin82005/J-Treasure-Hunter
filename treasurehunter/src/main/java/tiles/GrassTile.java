@@ -1,4 +1,4 @@
-package main.tiles;
+package tiles;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -23,7 +23,6 @@ public class GrassTile extends Tiles {
         for (int i = 0; i < numberOfTiles; i++) {
             this.tiles[i] = new Tiles();
             imagePath = "images/grass/" + i + ".png";
-            // System.out.println(imagePath + " : " +
             // getClass().getResourceAsStream(imagePath));
             try {
                 BufferedImage image = ImageIO.read(getClass().getResourceAsStream(imagePath));
@@ -32,9 +31,5 @@ public class GrassTile extends Tiles {
                 System.out.println("Error in Loading Grass Tiles: " + imagePath);
             }
         }
-        // System.out.println("LOADED GRASS TILES : ");
-        // for (Tiles tiles2 : this.tiles) {
-        // System.out.println(tiles2 + " ");
-        // }
     }
 }

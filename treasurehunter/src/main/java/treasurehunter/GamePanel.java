@@ -8,8 +8,8 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-import main.services.ReadINIFile;
-import main.tiles.TileManager;
+import services.ReadINIFile;
+import tiles.TileManager;
 
 
 
